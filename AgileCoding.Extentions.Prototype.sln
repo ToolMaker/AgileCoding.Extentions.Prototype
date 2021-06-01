@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileCoding.Extentions.Prototype", "AgileCoding.Extentions.Prototype\AgileCoding.Extentions.Prototype.csproj", "{13240743-03EB-4B72-A3F5-258874FE27FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13240743-03EB-4B72-A3F5-258874FE27FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13240743-03EB-4B72-A3F5-258874FE27FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13240743-03EB-4B72-A3F5-258874FE27FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13240743-03EB-4B72-A3F5-258874FE27FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC886743-9BD0-4528-9AC5-09BFA14489EC}
+	EndGlobalSection
+EndGlobal
