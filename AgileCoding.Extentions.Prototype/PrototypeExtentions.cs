@@ -19,6 +19,7 @@
         /// <typeparam name="TypeToCopy">Generic type to copy</typeparam>
         /// <param name="self">the object the extention is being called on</param>
         /// <returns>The copied object</returns>
+        [Obsolete]
         public static TypeToCopy DeepBinaryCopy<TypeToCopy>(this TypeToCopy self)
         {
             self.ThrowIfNull<TypeToCopy, ArgumentNullException>($"{nameof(DeepBinaryCopy)} extention method had a {nameof(ArgumentNullException)}. It seems the object were {nameof(DeepBinaryCopy)} method is called on is null");
@@ -28,7 +29,9 @@
                 var binaryFormattter = new BinaryFormatter();
                 try
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     binaryFormattter.Serialize(memoryStream, self);
+#pragma warning restore CS8604 // Possible null reference argument.
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     return (TypeToCopy)binaryFormattter.Deserialize(memoryStream);
                 }
@@ -56,6 +59,7 @@
         /// <param name="self">the object the extention is being called on</param>
         /// <returns>The copied object</returns>
         public static TypeToCopy DeepXMLCopy<TypeToCopy>(this TypeToCopy self)
+            where TypeToCopy : class
         {
             self.ThrowIfNull<TypeToCopy, ArgumentNullException>($"{nameof(DeepXMLCopy)} extention method had a {nameof(ArgumentNullException)}. It seems the object were {nameof(DeepXMLCopy)} method is called on is null");
 
@@ -66,7 +70,12 @@
                 {
                     xmlSerializer.Serialize(memoryStream, self);
                     memoryStream.Seek(0, SeekOrigin.Begin);
-                    return (TypeToCopy)xmlSerializer.Deserialize(memoryStream);
+                    var copyType = xmlSerializer.Deserialize(memoryStream) as TypeToCopy;
+                    if (copyType == null)
+                    {
+                        throw new Exception($"{nameof(DeepXMLCopy)} extention method had a {nameof(Exception)}. Note: {nameof(DeepXMLCopy)} requires all types to have a paremeterless constructor.");
+                    }
+                    return copyType;
                 }
                 catch (Exception e)
                 {
@@ -87,7 +96,12 @@
         {
             self.ThrowIfNull<TypeToCopy, ArgumentNullException>($"{nameof(DeepJSONNewtonsoftCopy)} extention method had a {nameof(ArgumentNullException)}. It seems the object were {nameof(DeepJSONNewtonsoftCopy)} method is called on is null");
 
-            return JsonConvert.DeserializeObject<TypeToCopy>(JsonConvert.SerializeObject(self));
+            var copyType =  JsonConvert.DeserializeObject<TypeToCopy>(JsonConvert.SerializeObject(self));
+            if (copyType == null)
+            {
+                throw new Exception($"{nameof(DeepJSONNewtonsoftCopy)} extention method had a {nameof(Exception)}. Note: {nameof(DeepJSONNewtonsoftCopy)} requires all types to have a paremeterless constructor.");
+            }
+            return copyType;
         }
     }
 }
